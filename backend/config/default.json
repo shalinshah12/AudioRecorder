@@ -1,0 +1,7 @@
+{
+  "development": {
+    "port": 8082,
+    "mongoURI": "mongodb+srv://irfan:irfanahmed@cluster-ai.hshdc.mongodb.net/AudioDB?retryWrites=true&w=majority",
+    "Delimiter": "|"
+  }
+}

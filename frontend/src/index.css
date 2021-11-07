@@ -1,0 +1,136 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* background-color: aqua; */
+}
+
+
+input[type=checkbox] {
+  margin-top: 10px;
+  margin-left: 20px
+}
+
+#labelconsent{
+  margin-left: 5px;
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+#consent{
+  transform: scale(2.5);
+}
+
+
+#warmup{
+  margin-top: 85px;
+  background-color:#FFD966 ;
+  border-color:#FFD966;
+}
+
+#real{
+  margin-top: 40px;
+  border-color: #8497B0;
+  background-color: #8497B0;
+}
+
+#youtube{
+  margin-top: 100px;
+}
+
+#record, #stop, #upload{
+  background-color: #00B050;
+  border-color: #00B050;
+}
+
+#cancel{
+  background-color:#F4B183;
+  border-color: #F4B183;
+}
+
+#phrase{
+  background-color: #8FAADC;
+}
+
+#startText{
+  margin-top: 20px;
+  font-size: medium;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.modal {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.modal_content {
+  background-color: white;
+  position: absolute;
+  top: 20%;
+  left: 30%;
+  width: 40%;
+  padding: 20px;
+  border-radius: 5px;
+  border: 2px solid black;
+}
+
+.close {
+  color: Black;
+  float: right;
+}
+
+.close:hover {
+  color: cyan;
+  cursor: pointer;
+}
+
+.popup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  margin: auto;
+  background-color: rgba(0,0,0, 0.5);
+}
+.popup_inner {
+  position: absolute;
+  left: 25%;
+  right: 25%;
+  top: 25%;
+  bottom: 50%;
+  margin: auto;
+  border-radius: 20px; 
+  background: #D9D9D9;
+}
+
+#poptext{
+  margin-top: 5%;
+  margin-bottom: 10%;
+  margin-right: 10%;
+  margin-left: 10%;
+}
+
+#popupclose{
+  margin-top: -5%;
+  margin-right: 10%;
+  float: right;
+}
+
+/* audio::-webkit-media-controls-play-button {
+  width: 100px;
+  height: 100px;
+} */

@@ -1,0 +1,32 @@
+close the browser|
+copy the folder|
+go back|
+go forward|
+next slide|
+open window|
+open youtube|
+print document|
+restart computer|
+search on google|
+set out|
+shut down the system|
+take screenshot|
+turn up volume|
+go home|
+drill down|
+turn off voice control|
+show hints|
+show confirmation|
+open control center|
+play a song|
+Navigate to place|
+nearest coffee shop|
+set an alarm|
+remind me to go to party|
+create calendar event|
+show my search history|
+open privacy settings|
+send an email|
+invite for a meeting|
+tell me a joke|
+watch titanic
