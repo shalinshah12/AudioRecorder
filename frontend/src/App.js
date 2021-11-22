@@ -104,7 +104,7 @@ class App extends React.Component {
         endOfCommands: true,
         progress: 100,
       });
-      this.props.survey();
+      this.survey();
     } else {
       this.setState({
         index: index,
@@ -113,7 +113,6 @@ class App extends React.Component {
       });
     }
   }
-
   getCurrentText() {
     var { currentText } = this.state;
     console.log(currentText)
@@ -199,8 +198,12 @@ class App extends React.Component {
       showCancel: false,
       showAudio: false,
       showSurvey: true,
-      // seen: !this.state.seen
+      // showPause: false,
+      // showUpload: false,
+      // showResume: false,
+      // disabledRecording: false,
     });
+    alert("The study is complete. Click on the 'OK' Button and then click on the 'Begin Survey' to complete the survey.")
   };
 
   cancel = () => {
