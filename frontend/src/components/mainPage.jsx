@@ -70,7 +70,7 @@ class Main extends Component {
     let state = this.state
     if(e.target.checked === true) {
       document.getElementById("alert").innerHTML = ""
-      window.open("https://demo.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=47fdb643-790c-4558-9801-8dda0bdd5400&env=demo&acct=cae06343-f718-4143-bb24-4a8293a617dd&v=2")
+      // window.open("https://demo.docusign.net/Member/PowerFormSigning.aspx?PowerFormId=47fdb643-790c-4558-9801-8dda0bdd5400&env=demo&acct=cae06343-f718-4143-bb24-4a8293a617dd&v=2")
       // state.disabled1 = false
       state.consent = e.target.checked
       this.setState(state)

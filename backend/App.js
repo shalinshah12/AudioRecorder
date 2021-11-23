@@ -2,6 +2,8 @@ const express = require("express");
 var config = require("./config/default.json");
 const fs = require("fs");
 const path = require("path");
+// const key = fs.readFileSync('backend/key.pem');
+// const cert = fs.readFileSync('backend/cert.pem');
 //var cors = require("cors");
 var multer = require("multer");
 const { GridFsStorage } = require("multer-gridfs-storage");
@@ -89,6 +91,11 @@ app.post("/receive-userData", (req, res) => {
 });
 
 //#endregion
+
+// const server = https.createServer({key: key, cert: cert }, app);
+//#endregion
+
+
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 

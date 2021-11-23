@@ -160,6 +160,7 @@ class Trial extends Component {
       showPause:true,
       disbalePhrase: false,
       disabledRecording: false,
+      autoplay:false,
     });
   };
 

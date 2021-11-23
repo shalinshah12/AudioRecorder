@@ -67,7 +67,7 @@ class App extends React.Component {
       .then((arr) => {
         var res = [];
 
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 1; i++) {
           res = res.concat(arr.data);
         }
 
