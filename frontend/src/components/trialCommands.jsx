@@ -264,7 +264,7 @@ class Trial extends Component {
       );
       // startText="Click the START button to begin recording"
     }
-    if (showUpload) {
+    if (showUpload && this.state.index< this.state.text.length) {
       startText = (
         <div
           className="text-black m-2 rounded"
@@ -327,7 +327,7 @@ class Trial extends Component {
       displayText = (
         <div
           className="m-2 rounded text-center"
-          style={{ height: "100px" }}
+          style={{ height: "100px", paddingTop: "20px" }}
         >
           <h1>Warm Up Completed</h1>
         </div>
@@ -438,7 +438,7 @@ class Trial extends Component {
               </button>
             )}
           </div>
-          <div className="row m-2" id="recording" style={{display:disabledRecording?"block":"none", fontSize:"20px"}}><center>Recording...</center></div>
+          <div className="row m-2" id="recording" style={{display:(disabledRecording && this.state.index< this.state.text.length)?"block":"none", fontSize:"20px"}}><center>Recording...</center></div>
         </div>
         <div className="row m-2">
           {showAudio && (

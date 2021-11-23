@@ -104,7 +104,7 @@ class App extends React.Component {
         endOfCommands: true,
         progress: 100,
       });
-      this.props.survey();
+      this.survey();
     } else {
       this.setState({
         index: index,
@@ -199,8 +199,11 @@ class App extends React.Component {
       showCancel: false,
       showAudio: false,
       showSurvey: true,
+      showUpload: false,
+      showPause: false
       // seen: !this.state.seen
     });
+    alert("The study is complete. Click on the 'OK' button and then click on the 'Skip the recording trials and jump to the survey' to fill the survey")
   };
 
   cancel = () => {
@@ -348,7 +351,7 @@ class App extends React.Component {
       );
       // startText="Click the START button to begin recording"
     }
-    if (showUpload) {
+    if (showUpload && this.state.index< this.state.text.length) {
       startText = (
         <div
           className="text-black m-2 rounded"
@@ -410,7 +413,7 @@ class App extends React.Component {
       displayText = (
         <div
           className="m-2 rounded text-center"
-          style={{ height: "100px" }} 
+          style={{ height: "100px",paddingTop:"20px" }} 
         >
           <h1>Warm Up Completed</h1>
         </div>
@@ -475,7 +478,7 @@ class App extends React.Component {
                 Stop
               </button>
             )} */}
-            {showUpload && (
+            {showUpload && this.state.index< this.state.text.length && (
               <button
                 className="btn btn-success btn-lg"
                 id="upload"
@@ -509,7 +512,7 @@ class App extends React.Component {
               </button>
             )}
           </div>
-          <div className="row m-2" id="recording" style={{display:disabledRecording?"block":"none", fontSize:"20px"}}><center>Recording...</center></div>
+          <div className="row m-2" id="recording" style={{display:(disabledRecording && this.state.index< this.state.text.length)?"block":"none", fontSize:"20px"}}><center>Recording...</center></div>
         </div>
         <div className="row m-4">
           {showAudio && (
