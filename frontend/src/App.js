@@ -415,7 +415,7 @@ class App extends React.Component {
           className="m-2 rounded text-center"
           style={{ height: "100px",paddingTop:"20px" }} 
         >
-          <h1>Warm Up Completed</h1>
+          <h1>Recording Study Completed</h1>
         </div>
       );
     }

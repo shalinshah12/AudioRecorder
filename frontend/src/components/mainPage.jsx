@@ -120,7 +120,7 @@ class Main extends Component {
                     // target="_blank"
                     checked={this.state.consent} 
                     onChange= {this.checkboxchange}/>
-                      <b>     Please check to consent for participating in the study</b>
+                      <b style={{paddingLeft:"20px"}}>     Please check to consent for participating in the study</b>
                   </label>
                   <label id="alert" style={{color:"red"}}></label>
                   </div>
