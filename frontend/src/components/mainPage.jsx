@@ -3,6 +3,8 @@ import App from "../App";
 import Trial from "./trialCommands";
 import Tutorial from "./tutorialPage";
 import trial1 from "../trial.png";
+import tutorialvideo from '../tutorialvideo.MP4';
+
 // mport { useEffect, useState } from "react";
 // import 'antd/dist/antd.css';
 // import { Checkbox } from 'antd';
@@ -152,7 +154,10 @@ class Main extends Component {
                   </div>
                 </div>
                 <div className="col">
-                  <img src={ trial1 } className="img-fluid" id="youtube"/>
+                  {/* <img src={ trial1 } className="img-fluid" id="youtube"/> */}
+                  <video controls style={{height:"70%", width:"80%"}} id="youtube">
+                    <source src={tutorialvideo} type='video/mp4'/>
+                  </video>
                 </div>
               </div>
             </div>
