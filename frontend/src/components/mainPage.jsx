@@ -155,7 +155,7 @@ class Main extends Component {
                 </div>
                 <div className="col">
                   {/* <img src={ trial1 } className="img-fluid" id="youtube"/> */}
-                  <video controls style={{height:"70%", width:"80%"}} id="youtube">
+                  <video controls style={{height:"80%", width:"90%", marginRight:"15px"}} id="youtube">
                     <source src={tutorialvideo} type='video/mp4'/>
                   </video>
                 </div>
