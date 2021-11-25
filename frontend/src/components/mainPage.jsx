@@ -154,8 +154,9 @@ class Main extends Component {
                   </div>
                 </div>
                 <div className="col">
+                  <p style={{marginTop:"70px", fontSize:"18px"}}><b>Tutorial Video</b></p>
                   {/* <img src={ trial1 } className="img-fluid" id="youtube"/> */}
-                  <video controls style={{height:"80%", width:"90%", marginRight:"15px"}} id="youtube">
+                  <video controls style={{height:"90%", width:"100%", marginRight:"15px", marginLeft:"-10px"}} id="youtube">
                     <source src={tutorialvideo} type='video/mp4'/>
                   </video>
                 </div>
