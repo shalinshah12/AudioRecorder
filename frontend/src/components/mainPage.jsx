@@ -132,7 +132,7 @@ class Main extends Component {
                     className="btn btn-lg"
                     id="warmup"
                     disabled = {this.state.disabled1}
-                    style={{ height: "100px", width: "50%", fontSize: "30px", backgroundColor: this.state.backgroundColor1, borderColor: this.state.borderColor1, marginLeft:"-50px" }}
+                    style={{ height: "100px", width: "50%", fontSize: "30px", backgroundColor: this.state.backgroundColor1, borderColor: this.state.borderColor1, marginLeft:"-120px", marginTop:"150px" }}
                     onClick={this.trial}
                   >
                     Warmup Exercises
@@ -145,7 +145,7 @@ class Main extends Component {
                     className="btn btn-lg"
                     id="real"
                     disabled = {this.state.disabled1}
-                    style={{ height: "100px", width: "50%", fontSize: "30px", backgroundColor: this.state.backgroundColor2, borderColor: this.state.borderColor2, marginLeft:"-50px" }}
+                    style={{ height: "100px", width: "50%", fontSize: "30px", backgroundColor: this.state.backgroundColor2, borderColor: this.state.borderColor2, marginLeft:"-120px", marginTop:"70px"}}
                     onClick={this.real}
                   >
                     Begin Recording Study
@@ -154,9 +154,9 @@ class Main extends Component {
                   </div>
                 </div>
                 <div className="col">
-                  <p style={{marginTop:"48px", marginLeft:"-60px", fontSize:"25px"}}><b>Tutorial Video</b></p>
+                  <p style={{marginTop:"60px", marginLeft:"125px", fontSize:"25px"}}><b>Tutorial Video</b></p>
                   {/* <img src={ trial1 } className="img-fluid" id="youtube"/> */}
-                  <video controls style={{height:"100%", width:"100%", marginRight:"15px", marginLeft:"-60px", marginTop:"-20px"}} id="youtube">
+                  <video controls style={{height:"90%", width:"120%", marginRight:"15px", marginLeft:"-170px", marginTop:"-20px"}} id="youtube">
                     <source src={tutorialvideo} type='video/mp4'/>
                   </video>
                 </div>

@@ -58,6 +58,7 @@ class App extends React.Component {
       autoplay: false,
       showOriginalAudio: false,
       disabledRecording: false,
+      stream:"",
     };
   }
 
@@ -139,6 +140,80 @@ class App extends React.Component {
     await axios.post("/receive-userData", formData);
     //console.log("Done");
   };
+  visualize = (audioData) => {
+    
+    var stream = this.stream;
+    console.log("Hi",stream)
+    if (!stream)
+        return;
+    canvas = document.getElementById("visualizer");
+    // this.stopVisualizer();
+
+    var canvas = canvas;
+    var WIDTH = canvas.width;
+    var HEIGHT = canvas.height;
+
+    var ctx = canvas.getContext("2d");
+
+    var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    var analyser = audioContext.createAnalyser();
+    var dataArray = new Uint8Array(analyser.frequencyBinCount);
+    
+    if (stream instanceof Blob) {
+        const arrayBuffer = new Response(stream).arrayBuffer();
+        const audioBuffer = audioContext.decodeAudioData(arrayBuffer);
+        source = audioContext.createBufferSource();
+        source.buffer = audioBuffer;
+        source.connect(analyser);
+        source.start(0);
+    }
+    else {
+        var source = audioContext.createMediaStreamSource(stream);
+        source.connect(analyser);
+    }
+
+    analyser.fftSize = 1024;
+    var bufferLength = analyser.fftSize;
+    var dataArray = new Uint8Array(bufferLength);
+
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    var draw = () => {
+
+        this.visualDrawTimer = requestAnimationFrame(draw);
+
+        analyser.getByteTimeDomainData(dataArray);
+
+        ctx.fillStyle = "#D9D9D9";
+        ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "black";
+
+        ctx.beginPath();
+
+        var sliceWidth = WIDTH * 1.0 / bufferLength;
+        var x = 0;
+
+        for(var i = 0; i < bufferLength; i++) {
+
+            var v = dataArray[i] / 128.0;
+            var y = v * HEIGHT/2;
+
+            if(i === 0) {
+                ctx.moveTo(x, y);
+            }
+            else {
+                ctx.lineTo(x, y);
+            }
+
+            x += sliceWidth;
+        }
+
+        ctx.lineTo(WIDTH, HEIGHT/2);
+        ctx.stroke();
+    };
+    draw();
+}
 
   start = () => {
     this.setState({
@@ -149,6 +224,16 @@ class App extends React.Component {
       disbalePhrase: false,
       disabledRecording: true,
       showOriginalAudio: false,
+    },function(){
+      navigator.mediaDevices.getUserMedia ({
+        audio: true,
+        video: false
+    })
+            .then( stream => {
+                this.stream = stream;
+                this.visualize();
+            })
+            .catch(e => console.log("ERROR", e));
     });
   };
 
@@ -180,6 +265,7 @@ class App extends React.Component {
     });
 
     var data = this.state.audioData;
+    this.visualize(data);
     this.incrementCommand();
     var command_name = this.getCurrentText();
     var userId = this.state.userId;
@@ -233,7 +319,7 @@ class App extends React.Component {
     });
     console.log("Cancelled");
   };
-
+  
   resume = () => {
     this.setState({
       // recordState: RecordState.START,
@@ -512,7 +598,7 @@ class App extends React.Component {
               </button>
             )}
           </div>
-          <div className="row m-2" id="recording" style={{display:(disabledRecording && this.state.index< this.state.text.length)?"block":"none", fontSize:"20px"}}><center>Recording...</center></div>
+          <div className="row m-2" id="recording" style={{display:(disabledRecording && this.state.index< this.state.text.length)?"block":"none", fontSize:"20px"}}><center><canvas id="visualizer" width="300" height="50"></canvas></center></div>
         </div>
         <div className="row m-4">
           {showAudio && (
