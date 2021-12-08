@@ -5,7 +5,8 @@ import Command from "./components/commands";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 // import sound from "./1-second-of-silence.mp3";
-import sound from "./500-milliseconds-of-silence.mp3"
+import sound from "./500-milliseconds-of-silence.mp3";
+import micicon from "./microphone.png";
 // import PopUp from "./PopUp";
 // frontend\src\1-second-of-silence.mp3
 
@@ -187,7 +188,7 @@ class App extends React.Component {
         ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
         ctx.lineWidth = 2;
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = "red";
 
         ctx.beginPath();
 
@@ -598,7 +599,7 @@ class App extends React.Component {
               </button>
             )}
           </div>
-          <div className="row m-2" id="recording" style={{display:(disabledRecording && this.state.index< this.state.text.length)?"block":"none", fontSize:"20px"}}><center><canvas id="visualizer" width="300" height="50"></canvas></center></div>
+          <div className="row m-2" id="recording" style={{display:(disabledRecording && this.state.index< this.state.text.length)?"block":"none", fontSize:"20px"}}><center><img src={micicon} style={{width:"4%", height:"4%",  marginRight:"10px", marginBottom:"-5px"}}/><canvas id="visualizer" width="300" height="50" style={{marginBottom:"-20px"}}></canvas></center></div>
         </div>
         <div className="row m-4">
           {showAudio && (
@@ -612,7 +613,7 @@ class App extends React.Component {
                 style={{width:"50%"}}
               ></audio>
               <p id="audioplayertext" style={{fontSize:"22px"}}>
-                <i>(Optional) Click to hear what you've recorded.</i>
+                <i>(Optional) Click the play button to hear what you've recorded.</i>
               </p>
             </div>
           )}

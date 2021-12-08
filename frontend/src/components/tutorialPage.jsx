@@ -10,7 +10,7 @@ class Tutorial extends Component {
       <div className="container-fluid">
         <nav class="navbar navbar-light" style={{backgroundColor:"#D9D9D9"}}>
           {/* <center><span class="navbar-brand mb-0 h1" > */}
-          <span><center><h1 id="appname">Welcome to Audio Recorder Study</h1></center></span>  
+          <span style={{marginLeft:"300px"}}><center><h1 id="appname">Welcome to Audio Recorder Study</h1></center></span>  
           {/* </span></center> */}
         </nav>
         {/* <nav className="navbar navbar-light bg-light">

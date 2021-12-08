@@ -3,6 +3,7 @@ import AudioReactRecorder, { RecordState } from "audio-react-recorder";
 import "audio-react-recorder/dist/index.css";
 import App from "../App";
 import sound from '../500-milliseconds-of-silence.mp3';
+import micicon from "../microphone.png";
 
 class Trial extends Component {
   constructor(props) {
@@ -125,11 +126,13 @@ class Trial extends Component {
 
         analyser.getByteTimeDomainData(dataArray);
 
+        // ctx.fillStyle = "lightblue";
+
         ctx.fillStyle = "#D9D9D9";
         ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
         ctx.lineWidth = 2;
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = "red";
 
         ctx.beginPath();
 
@@ -525,7 +528,7 @@ class Trial extends Component {
               </button>
             )}
           </div>
-          <div className="row m-2" id="recording" style={{display:(disabledRecording && this.state.index< this.state.text.length)?"block":"none", fontSize:"20px"}}><center><canvas id="visualizer" width="300" height="50"></canvas></center></div>
+          <div className="row m-2" id="recording" style={{display:(disabledRecording && this.state.index< this.state.text.length)?"block":"none", fontSize:"20px"}}><center><img src={micicon} style={{width:"4%", height:"4%",  marginRight:"10px", marginBottom:"-5px"}}/><canvas id="visualizer" width="300" height="50" style={{marginBottom:"-20px"}}></canvas></center></div>
         </div>
         <div className="row m-2">
           {showAudio && (
@@ -541,7 +544,7 @@ class Trial extends Component {
               ></audio>
               {/* {console.log("inside audio", this.state.audioData)} */}
               <p style={{fontSize:"22px"}}>
-                <i>(Optional) Click to hear what you've recorded.</i>
+                <i>(Optional) Click the play button to hear what you've recorded.</i>
               </p>
             </div>
           )}
