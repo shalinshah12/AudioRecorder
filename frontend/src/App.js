@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 // import sound from "./1-second-of-silence.mp3";
 import sound from "./500-milliseconds-of-silence.mp3";
-import micicon from "./microphone.png";
+import micicon from "./microphone2.png";
 // import PopUp from "./PopUp";
 // frontend\src\1-second-of-silence.mp3
 
