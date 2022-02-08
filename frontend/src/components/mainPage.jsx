@@ -3,6 +3,7 @@ import App from "../App";
 import Trial from "./trialCommands";
 import Tutorial from "./tutorialPage";
 import trial1 from "../trial.png";
+
 import tutorialvideo from '../tutorialvideo2.MP4';
 
 // mport { useEffect, useState } from "react";
