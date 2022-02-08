@@ -4,7 +4,7 @@ import Trial from "./trialCommands";
 import Tutorial from "./tutorialPage";
 import trial1 from "../trial.png";
 
-import tutorialvideo from '../tutorialvideo2.MP4';
+import tutorialvideo from '../tutorialvideo2.mp4';
 
 // mport { useEffect, useState } from "react";
 // import 'antd/dist/antd.css';
