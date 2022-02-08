@@ -30,11 +30,9 @@ class Trial extends Component {
       showAudio: true,
       completeTrial: true,
       showReal:false,
-      // showPause:false,
       showResume:false,
       disabledStart: false,
       disbaledNext: false,
-      // disabledPause: false,
       disbaledResume: false,
       disbalePhrase: false,
       autoplay:false,
@@ -90,7 +88,6 @@ class Trial extends Component {
     if (!stream)
         return;
     canvas = document.getElementById("visualizer");
-    // this.stopVisualizer();
 
     var canvas = canvas;
     var WIDTH = canvas.width;
@@ -161,7 +158,6 @@ class Trial extends Component {
 }
 
   start = () => {
-    // recordingstate = document.getElementById("recording").style.display
     this.setState({
       recordState: RecordState.START,
       showStart: false,
@@ -183,17 +179,6 @@ class Trial extends Component {
     });
   };
 
-  // stop = () => {
-  //   this.setState({
-  //     recordState: RecordState.STOP,
-  //     showStart: false,
-  //     showStop: false,
-  //     showUpload: true,
-  //     disableCancel: false,
-  //   });
-  //   //this.commandRef.current.incrementCommand();
-  // };
-
   upload = (data) => {
     this.setState({
       recordState: RecordState.STOP,
@@ -210,12 +195,10 @@ class Trial extends Component {
     
     var data = this.state.audioData;
     this.visualize(data);
-    // console.log(data.blob.size)
     this.incrementCommand();
     var command_name = this.state.currentText;
     console.log(command_name);
     console.log("This is data url : ", data?.url);
-    //this.sendToServer(data.url, command_name, userId);
     this.testFun();
     console.log("onStop: audio data", data);
   };
@@ -240,10 +223,8 @@ class Trial extends Component {
 
   resume = () => {
     this.setState({
-      // recordState: RecordState.START,
       showResume: false,
       showStart: true,
-      // showStop: true,
       showUpload: false,
       disbaledNext:false,
       disabledStart: false,
@@ -352,7 +333,6 @@ class Trial extends Component {
           <center><p id="startText" style={{fontSize:"22px"}}> Click the <b>START</b> button to begin recording</p></center>
         </div>
       );
-      // startText="Click the START button to begin recording"
     }
     if (showUpload && this.state.index< this.state.text.length) {
       startText = (
@@ -400,7 +380,6 @@ class Trial extends Component {
         >
           <h2 className="text-center">The Recording is paused now.</h2>
           <h2 className="text-center">Click Resume Study button to resume recording study.</h2>
-          {/* <h2 className="text-center">After clicking on the resume, re-record the phrase.</h2> */}
         </div>
       );
       nextText = (
@@ -453,19 +432,11 @@ class Trial extends Component {
                 </div>
               </div>
               <div id="phrase" style={{fontSize:"22px"}}>
-                {/* <p>
-                    <strong>
-                      Click the START button and speak the following phrase
-                    </strong>
-                </p> */}
+                
                 {startText}
                 {displayText}
                 {nextText}
-                {/* <p>
-                    <strong>
-                      After speaking, click NEXT to move to the next phrase.
-                    </strong>
-                </p> */}
+                
               </div>
             </div>
           </div>
@@ -484,16 +455,7 @@ class Trial extends Component {
                 Start
               </button>
             )}
-            {/* {showStop && (
-              <button
-                className="btn btn-danger btn-lg"
-                id="stop"
-                style={{ height: "100px", width: "25%", fontSize: "30px" }}
-                onClick={this.stop}
-              >
-                Stop
-              </button>
-            )} */}
+            
             {showUpload && (this.state.index< this.state.text.length) && (
               <button
                 className="btn btn-success btn-lg"
@@ -522,7 +484,6 @@ class Trial extends Component {
                 id="resume"
                 style={{ height: "100px", width: "25%", fontSize: "30px" }}
                 onClick={this.resume}
-                // disabled={disableCancel}
               >
                 Resume Study
               </button>
@@ -542,7 +503,6 @@ class Trial extends Component {
                 onPlay={this.play1}
                 style={{width:"50%"}}
               ></audio>
-              {/* {console.log("inside audio", this.state.audioData)} */}
               <p style={{fontSize:"22px"}}>
                 <i>(Optional) Click the play button to hear what you've recorded.</i>
               </p>
