@@ -29,4 +29,39 @@ open privacy settings|
 send an email|
 invite for a meeting|
 tell me a joke|
-watch titanic
+watch titanic|
+Pick up the bowl and place it in front of the cheez-it box|
+Pick up the spoon and place it next to the bowl|
+Pick up the cup and place it on top of the table|
+Pick up the spoon|
+Place the bowl in front of me|
+Place the plate on the table|
+Move the cup to the right|
+Move the cup to the left of the bowl|
+Bring the cup to me|
+Bring the spoon closer|
+Bring me some water|
+Throw the apple into the trash can|
+Place the mug in the sink|
+Place the dish in the dishwasher|
+Open the drawer|
+Open the fridge|
+Open the box|
+Close the door|
+Hold the door open|
+Place the dishes in the dish rack|
+Place the book in the shelf|
+Place the book in the drawer|
+Pour some water into the cup|
+Pour some juice into the cup|
+Pour some cereal into the bowl|
+Get the milk from the fridge|
+Get the pen from the drawer|
+Get me some salt|
+Get me some pepper|
+Get me the blue cup|
+Turn on the switch|
+Turn off the switch|
+Move to the left|
+Move to the right|
+Stop|
