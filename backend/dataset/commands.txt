@@ -44,8 +44,6 @@ Bring me some water|
 Throw the apple into the trash can|
 Place the mug in the sink|
 Place the dish in the dishwasher|
-Open the drawer|
-Open the fridge|
 Open the box|
 Close the door|
 Hold the door open|
@@ -64,4 +62,3 @@ Turn on the switch|
 Turn off the switch|
 Move to the left|
 Move to the right|
-Stop|
