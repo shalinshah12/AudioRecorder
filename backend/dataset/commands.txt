@@ -61,4 +61,4 @@ Get me the blue cup|
 Turn on the switch|
 Turn off the switch|
 Move to the left|
-Move to the right|
+Move to the right
