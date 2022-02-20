@@ -1,0 +1,74 @@
+// visualize = (audioData) => {
+
+  //   var stream = this.stream;
+  //   console.log("Hi", stream)
+  //   if (!stream)
+  //     return;
+  //   canvas = document.getElementById("visualizer");
+  //   // this.stopVisualizer();
+
+  //   var canvas = canvas;
+  //   var WIDTH = canvas.width;
+  //   var HEIGHT = canvas.height;
+
+  //   var ctx = canvas.getContext("2d");
+
+  //   var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  //   var analyser = audioContext.createAnalyser();
+  //   var dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+  //   if (stream instanceof Blob) {
+  //     const arrayBuffer = new Response(stream).arrayBuffer();
+  //     const audioBuffer = audioContext.decodeAudioData(arrayBuffer);
+  //     source = audioContext.createBufferSource();
+  //     source.buffer = audioBuffer;
+  //     source.connect(analyser);
+  //     source.start(0);
+  //   }
+  //   else {
+  //     var source = audioContext.createMediaStreamSource(stream);
+  //     source.connect(analyser);
+  //   }
+
+  //   analyser.fftSize = 1024;
+  //   var bufferLength = analyser.fftSize;
+  //   var dataArray = new Uint8Array(bufferLength);
+
+  //   ctx.clearRect(0, 0, WIDTH, HEIGHT);
+  //   var draw = () => {
+
+  //     this.visualDrawTimer = requestAnimationFrame(draw);
+
+  //     analyser.getByteTimeDomainData(dataArray);
+
+  //     ctx.fillStyle = "#D9D9D9";
+  //     ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+  //     ctx.lineWidth = 2;
+  //     ctx.strokeStyle = "red";
+
+  //     ctx.beginPath();
+
+  //     var sliceWidth = WIDTH * 1.0 / bufferLength;
+  //     var x = 0;
+
+  //     for (var i = 0; i < bufferLength; i++) {
+
+  //       var v = dataArray[i] / 128.0;
+  //       var y = v * HEIGHT / 2;
+
+  //       if (i === 0) {
+  //         ctx.moveTo(x, y);
+  //       }
+  //       else {
+  //         ctx.lineTo(x, y);
+  //       }
+
+  //       x += sliceWidth;
+  //     }
+
+  //     ctx.lineTo(WIDTH, HEIGHT / 2);
+  //     ctx.stroke();
+  //   };
+  //   draw();
+  // }

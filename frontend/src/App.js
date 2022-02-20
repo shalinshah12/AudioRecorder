@@ -7,16 +7,17 @@ import axios from "axios";
 // import sound from "./1-second-of-silence.mp3";
 import sound from "./500-milliseconds-of-silence.mp3";
 import micicon from "./microphone2.png";
+import AudioAnalyZer from "./components/audioAnalyzer";
 // import PopUp from "./PopUp";
 // frontend\src\1-second-of-silence.mp3
 
-class Popup extends React.Component {
+class Popup extends React.Component {
   render() {
     return (
       <div className='popup'>
         <div className='popup_inner'>
           <h1 id="poptext">{this.props.text}</h1>
-        {/* <button id="popupclose" onClick={this.props.closePopup}>close me</button> */}
+          {/* <button id="popupclose" onClick={this.props.closePopup}>close me</button> */}
         </div>
       </div>
     );
@@ -27,7 +28,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.commandRef = React.createRef();
-    console.log(this.commandRef)
+    // console.log(this.commandRef)
     this.state = {
       text: [],
       index: 0,
@@ -46,9 +47,9 @@ class App extends React.Component {
       showSurvey: true,
       googleFormLink:
         "https://docs.google.com/forms/d/e/1FAIpQLSfDjiBwRF0ih3ERrvPIzb5n3Nvam1huhTQaF7xgd3eHS9SGqg/viewform?usp=pp_url&entry.121201065=",
-      showPause:true,
-      disablePause:true,
-      showResume:false,
+      showPause: true,
+      disablePause: true,
+      showResume: false,
       disabledStart: false,
       disbaledNext: false,
       // disabledPause: false,
@@ -59,7 +60,9 @@ class App extends React.Component {
       autoplay: false,
       showOriginalAudio: false,
       disabledRecording: false,
-      stream:"",
+      stream: "",
+      audio: null,
+      checkifplay: false,
     };
   }
 
@@ -74,7 +77,7 @@ class App extends React.Component {
         }
 
         res = this.shuffleArray(res);
-        console.log(res);
+        // console.log(res);
 
         this.setState({
           text: res,
@@ -95,7 +98,7 @@ class App extends React.Component {
 
     this.sendUserIdToServer({ uuid: uuid });
   }
-  
+
   incrementCommand() {
     var { index, text } = this.state;
     var progress = Math.floor(((index + 1) / text.length) * 100);
@@ -118,7 +121,7 @@ class App extends React.Component {
 
   getCurrentText() {
     var { currentText } = this.state;
-    console.log(currentText)
+    // console.log(currentText)
     return currentText;
   }
 
@@ -141,82 +144,9 @@ class App extends React.Component {
     await axios.post("/receive-userData", formData);
     //console.log("Done");
   };
-  visualize = (audioData) => {
-    
-    var stream = this.stream;
-    console.log("Hi",stream)
-    if (!stream)
-        return;
-    canvas = document.getElementById("visualizer");
-    // this.stopVisualizer();
 
-    var canvas = canvas;
-    var WIDTH = canvas.width;
-    var HEIGHT = canvas.height;
 
-    var ctx = canvas.getContext("2d");
-
-    var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    var analyser = audioContext.createAnalyser();
-    var dataArray = new Uint8Array(analyser.frequencyBinCount);
-    
-    if (stream instanceof Blob) {
-        const arrayBuffer = new Response(stream).arrayBuffer();
-        const audioBuffer = audioContext.decodeAudioData(arrayBuffer);
-        source = audioContext.createBufferSource();
-        source.buffer = audioBuffer;
-        source.connect(analyser);
-        source.start(0);
-    }
-    else {
-        var source = audioContext.createMediaStreamSource(stream);
-        source.connect(analyser);
-    }
-
-    analyser.fftSize = 1024;
-    var bufferLength = analyser.fftSize;
-    var dataArray = new Uint8Array(bufferLength);
-
-    ctx.clearRect(0, 0, WIDTH, HEIGHT);
-    var draw = () => {
-
-        this.visualDrawTimer = requestAnimationFrame(draw);
-
-        analyser.getByteTimeDomainData(dataArray);
-
-        ctx.fillStyle = "#D9D9D9";
-        ctx.fillRect(0, 0, WIDTH, HEIGHT);
-
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = "red";
-
-        ctx.beginPath();
-
-        var sliceWidth = WIDTH * 1.0 / bufferLength;
-        var x = 0;
-
-        for(var i = 0; i < bufferLength; i++) {
-
-            var v = dataArray[i] / 128.0;
-            var y = v * HEIGHT/2;
-
-            if(i === 0) {
-                ctx.moveTo(x, y);
-            }
-            else {
-                ctx.lineTo(x, y);
-            }
-
-            x += sliceWidth;
-        }
-
-        ctx.lineTo(WIDTH, HEIGHT/2);
-        ctx.stroke();
-    };
-    draw();
-}
-
-  start = () => {
+  start = (flag) => {
     this.setState({
       recordState: RecordState.START,
       showStart: false,
@@ -225,16 +155,24 @@ class App extends React.Component {
       disbalePhrase: false,
       disabledRecording: true,
       showOriginalAudio: false,
-    },function(){
-      navigator.mediaDevices.getUserMedia ({
+    }, async () => {
+      // navigator.mediaDevices.getUserMedia({
+      //   audio: true,
+      //   video: false
+      // })
+      //   .then(stream => {
+      //     this.stream = stream;
+      //     this.visualize();
+      //   })
+      //   .catch(e => console.log("ERROR", e));
+      const audio = await navigator.mediaDevices.getUserMedia({
         audio: true,
         video: false
-    })
-            .then( stream => {
-                this.stream = stream;
-                this.visualize();
-            })
-            .catch(e => console.log("ERROR", e));
+      });
+      this.setState({ audio });
+      if (flag){
+      this.incrementCommand();
+      }
     });
   };
 
@@ -250,6 +188,8 @@ class App extends React.Component {
   // };
 
   upload = (data) => {
+    
+    this.state.audio.getTracks().forEach(track => track.stop());
     this.setState({
       recordState: RecordState.STOP,
       showStart: false,
@@ -260,21 +200,25 @@ class App extends React.Component {
       disableCancel: true,
       showOriginalAudio: false,
       autoplay: false,
-      disabledRecording:true,
-    }, function(){
-      this.start();
+      disabledRecording: true,
+      audio: null
+    }, () => {  
+    this.start(true);
     });
-
-    var data = this.state.audioData;
-    this.visualize(data);
-    this.incrementCommand();
-    var command_name = this.getCurrentText();
-    var userId = this.state.userId;
-    console.log(command_name);
-    console.log("This is data url : ", data.url);
-    this.sendToServer(data.url, command_name, userId);
-    //this.testFun();
-    console.log("onStop: audio data", data);
+    // this.incrementCommand();
+    // var data = this.state.audioData;
+    // // this.visualize(data);
+    // debugger
+    // console.log(data)
+    // var command_name = this.getCurrentText();
+    // var userId = this.state.userId;
+    // console.log(command_name);
+    // console.log("This is data url : ", data.url);
+    // this.sendToServer(data.url, command_name, userId);
+    // this.incrementCommand();
+    // this.state.audio.getTracks().forEach(track => track.stop());
+    // console.log("onStop: audio data", data);
+    
     // this.setState({
     //   recordState: RecordState.STOP,
     // });
@@ -300,17 +244,17 @@ class App extends React.Component {
       showUpload: false,
       disableCancel: true,
     });
-    console.log("Cancelled");
+    // console.log("Cancelled");
   };
 
   pause = () => {
     this.setState({
       recordState: RecordState.STOP,
       showStart: true,
-      showResume:true,
-      showPause:false,
+      showResume: true,
+      showPause: false,
       showStop: false,
-      disbaledNext:true,
+      disbaledNext: true,
       disabledStart: true,
       showUpload: false,
       disablePause: false,
@@ -318,9 +262,9 @@ class App extends React.Component {
       showOriginalAudio: true,
       disabledRecording: false,
     });
-    console.log("Cancelled");
+    // console.log("Cancelled");
   };
-  
+
   resume = () => {
     this.setState({
       // recordState: RecordState.START,
@@ -328,9 +272,9 @@ class App extends React.Component {
       showResume: false,
       // showStop: true,
       showUpload: false,
-      disbaledNext:false,
+      disbaledNext: false,
       disabledStart: false,
-      showPause:true,
+      showPause: true,
       disbalePhrase: false,
       disabledRecording: false
     });
@@ -340,6 +284,20 @@ class App extends React.Component {
   onStop = (data) => {
     this.setState({
       audioData: data,
+
+    }, ()=>{
+    var a_data = this.state.audioData;
+    // this.visualize(data);
+    debugger
+    console.log(data)
+    var command_name = this.getCurrentText();
+    var userId = this.state.userId;
+    console.log(command_name);
+    console.log("This is data url : ", a_data.url);
+    this.sendToServer(a_data.url, command_name, userId);
+    
+    // this.incrementCommand();
+    console.log("onStop: audio data", a_data);
     });
   };
 
@@ -349,6 +307,7 @@ class App extends React.Component {
       autoplay: true,
       showOriginalAudio: true,
       disabledRecording: false,
+      checkifplay: true
     });
   }
 
@@ -358,7 +317,7 @@ class App extends React.Component {
     });
   }
 
-  sendToServer = async (mediaBlob, command_name, userId) => {
+  sendToServer = async(mediaBlob, command_name, userId) => {
     console.log("sending blob to server.");
     if (mediaBlob != null) {
       var xhr_get_audio = new XMLHttpRequest();
@@ -399,8 +358,8 @@ class App extends React.Component {
 
   render() {
     const {
-      currentText, 
-      endOfCommands, 
+      currentText,
+      endOfCommands,
       progress,
       recordState,
       showStart,
@@ -433,12 +392,12 @@ class App extends React.Component {
           className="text-black m-2 rounded"
           style={{ height: "200px" }}
         >
-          <center><p id="startText" style={{fontSize:"22px"}}> Click the <b>START</b> button to begin recording</p></center>
+          <center><p id="startText" style={{ fontSize: "22px" }}> Click the <b>START</b> button to begin recording</p></center>
         </div>
       );
       // startText="Click the START button to begin recording"
     }
-    if (showUpload && this.state.index< this.state.text.length) {
+    if (showUpload && this.state.index < this.state.text.length) {
       startText = (
         <div
           className="text-black m-2 rounded"
@@ -465,7 +424,7 @@ class App extends React.Component {
         </div>
       );
     }
-    if(showResume) {
+    if (showResume) {
       startText = (
         <div
           className="text-black m-2 rounded"
@@ -494,13 +453,13 @@ class App extends React.Component {
         </div>
       );
     }
-    
-    
+
+
     if (endOfCommands) {
       displayText = (
         <div
           className="m-2 rounded text-center"
-          style={{ height: "100px",paddingTop:"20px" }} 
+          style={{ height: "100px", paddingTop: "20px" }}
         >
           <h1>Recording Study Completed</h1>
         </div>
@@ -518,23 +477,23 @@ class App extends React.Component {
             <div className="command-container rounded col-sm">
               {/* <Command ref={this.commandRef} survey={this.survey} /> */}
               <div className="row m-2">
-          <p>
-            <strong>
-              Recording Study Progress : {this.state.index}/{this.state.text.length}
-            </strong>
-          </p>
-          <div className="progress" style={{ height: "20px" }}>
-            <div
-              className="progress-bar progress-bar-striped progress-bar-animated"
-              role="progressbar"
-              style={{ width: this.state.progress + "%", color: "black" }}
-              aria-valuenow={progress}
-              aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
-          </div>
-        </div>
-        <div id="phrase" style={{fontSize:"22px"}}>
+                <p>
+                  <strong>
+                    Recording Study Progress : {this.state.index}/{this.state.text.length}
+                  </strong>
+                </p>
+                <div className="progress" style={{ height: "20px" }}>
+                  <div
+                    className="progress-bar progress-bar-striped progress-bar-animated"
+                    role="progressbar"
+                    style={{ width: this.state.progress + "%", color: "black" }}
+                    aria-valuenow={progress}
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  ></div>
+                </div>
+              </div>
+              <div id="phrase" style={{ fontSize: "22px" }}>
                 {startText}
                 {displayText}
                 {nextText}
@@ -550,7 +509,9 @@ class App extends React.Component {
                 id="record"
                 disabled={this.state.disabledStart}
                 style={{ height: "100px", width: "25%", fontSize: "30px" }}
-                onClick={this.start}
+                onClick={()=>{
+                  this.start(false)
+                }}
               >
                 Start
               </button>
@@ -565,7 +526,7 @@ class App extends React.Component {
                 Stop
               </button>
             )} */}
-            {showUpload && this.state.index< this.state.text.length && (
+            {showUpload && this.state.index < this.state.text.length && (
               <button
                 className="btn btn-success btn-lg"
                 id="upload"
@@ -593,13 +554,14 @@ class App extends React.Component {
                 id="resume"
                 style={{ height: "100px", width: "25%", fontSize: "30px" }}
                 onClick={this.resume}
-                // disabled={disableCancel}
+              // disabled={disableCancel}
               >
                 Resume Recording Study
               </button>
             )}
           </div>
-          <div className="row m-2" id="recording" style={{display:(disabledRecording && this.state.index< this.state.text.length)?"block":"none", fontSize:"20px"}}><center><img src={micicon} style={{width:"4%", height:"4%",  marginRight:"10px", marginBottom:"-5px"}}/><canvas id="visualizer" width="300" height="50" style={{marginBottom:"-20px"}}></canvas></center></div>
+          {this.state.audio ? <AudioAnalyZer audio={this.state.audio} /> : ''}
+          {/* <div className="row m-2" id="recording" style={{ display: (disabledRecording && this.state.index < this.state.text.length) ? "block" : "none", fontSize: "20px" }}><center><img src={micicon} style={{ width: "4%", height: "4%", marginRight: "10px", marginBottom: "-5px" }} /><canvas id="visualizer" width="300" height="50" style={{ marginBottom: "-20px" }}></canvas></center></div> */}
         </div>
         <div className="row m-4">
           {showAudio && (
@@ -610,9 +572,9 @@ class App extends React.Component {
                 controls
                 src={this.state.showOriginalAudio && this.state.audioData ? this.state.audioData.url : sound}
                 onPlay={this.play1}
-                style={{width:"50%"}}
+                style={{ width: "50%" }}
               ></audio>
-              <p id="audioplayertext" style={{fontSize:"22px"}}>
+              <p id="audioplayertext" style={{ fontSize: "22px" }}>
                 <i>(Optional) Click the play button to hear what you've recorded.</i>
               </p>
             </div>
@@ -621,7 +583,7 @@ class App extends React.Component {
         <div className="row m-4">
           {showSurvey && (
             <div className="col text-center">
-            
+
               {/* btn-primary */}
               <a
                 href={googleFormLink}
@@ -629,21 +591,21 @@ class App extends React.Component {
                 id="survey"
                 target="_blank"
                 onClick={this.togglePopup.bind(this)}
-                style={{ height: "100px", width: "25%", fontSize: "23px", backgroundColor:"#CB6C6B"}}
+                style={{ height: "100px", width: "25%", fontSize: "23px", backgroundColor: "#CB6C6B" }}
               >
                 Skip the recording trials and jump to the survey
               </a>
               {/* {this.state.seen ? <PopUp toggle={this.togglePop} /> : null} */}
             </div>
-            
+
           )}
-           {this.state.showPopup ? 
-          <Popup
-            text='Thank you for participating in the study!'
-            closePopup={this.togglePopup.bind(this)}
-          />
-          : null
-        }
+          {this.state.showPopup ?
+            <Popup
+              text='Thank you for participating in the study!'
+              closePopup={this.togglePopup.bind(this)}
+            />
+            : null
+          }
         </div>
       </div>
     );
