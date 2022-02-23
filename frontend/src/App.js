@@ -7,7 +7,7 @@ import axios from "axios";
 // import sound from "./1-second-of-silence.mp3";
 import sound from "./500-milliseconds-of-silence.mp3";
 import micicon from "./microphone2.png";
-import AudioAnalyZer from "./components/audioAnalyzer";
+// import AudioAnalyZer from "./components/audioAnalyzer";
 // import PopUp from "./PopUp";
 // frontend\src\1-second-of-silence.mp3
 
@@ -165,11 +165,11 @@ class App extends React.Component {
       //     this.visualize();
       //   })
       //   .catch(e => console.log("ERROR", e));
-      const audio = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: false
-      });
-      this.setState({ audio });
+      // const audio = await navigator.mediaDevices.getUserMedia({
+      //   audio: true,
+      //   video: false
+      // });
+      // this.setState({ audio });
       if (flag){
       this.incrementCommand();
       }
@@ -189,7 +189,7 @@ class App extends React.Component {
 
   upload = (data) => {
     
-    this.state.audio.getTracks().forEach(track => track.stop());
+    // this.state.audio.getTracks().forEach(track => track.stop());
     this.setState({
       recordState: RecordState.STOP,
       showStart: false,
@@ -470,9 +470,9 @@ class App extends React.Component {
         <div className="row">
           <div className="col text-center">
             {/* <h1>SHALIN SHAH </h1> */}
-            <div hidden>
+            {/* <div hidden>
               <AudioReactRecorder state={recordState} onStop={this.onStop} />
-            </div>
+            </div> */}
 
             <div className="command-container rounded col-sm">
               {/* <Command ref={this.commandRef} survey={this.survey} /> */}
@@ -560,7 +560,15 @@ class App extends React.Component {
               </button>
             )}
           </div>
-          {this.state.audio ? <AudioAnalyZer audio={this.state.audio} /> : ''}
+          {/* {this.state.audio ? <AudioAnalyZer audio={this.state.audio} /> : ''} */}
+          <div className="row m-2" id="recording" >
+          <div className="col" style={{ display: (disabledRecording && this.state.index < this.state.text.length) ? "block" : "none"}}>
+          <img src={micicon} style={{ width: "7%", height: "60%", marginRight: "10px", marginRight:"-210px", marginLeft:"450px", marginTop:"20px"}}/>
+          </div>
+          <div className="col" style={{marginLeft:"-220px", marginTop:"20px", display: (disabledRecording && this.state.index < this.state.text.length) ? "block" : "none"}}>
+          <AudioReactRecorder state={recordState} onStop={this.onStop} backgroundColor={"#D9D9D9"} foregroundColor={"red"} canvasWidth={300} canvasHeight={50}  />
+          </div>
+          </div>
           {/* <div className="row m-2" id="recording" style={{ display: (disabledRecording && this.state.index < this.state.text.length) ? "block" : "none", fontSize: "20px" }}><center><img src={micicon} style={{ width: "4%", height: "4%", marginRight: "10px", marginBottom: "-5px" }} /><canvas id="visualizer" width="300" height="50" style={{ marginBottom: "-20px" }}></canvas></center></div> */}
         </div>
         <div className="row m-4">
@@ -572,7 +580,7 @@ class App extends React.Component {
                 controls
                 src={this.state.showOriginalAudio && this.state.audioData ? this.state.audioData.url : sound}
                 onPlay={this.play1}
-                style={{ width: "50%" }}
+                style={{ width: "50%" , marginTop:"-30px"}}
               ></audio>
               <p id="audioplayertext" style={{ fontSize: "22px" }}>
                 <i>(Optional) Click the play button to hear what you've recorded.</i>

@@ -1,5 +1,5 @@
 import React from 'react';
-import micicon from "../microphone2.png";
+import micicon from "./microphone2.png";
 
 
 class AudioVisualiser extends React.Component {

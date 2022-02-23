@@ -3,7 +3,7 @@ import AudioReactRecorder, { RecordState } from "audio-react-recorder";
 import "audio-react-recorder/dist/index.css";
 import App from "../App";
 import sound from '../500-milliseconds-of-silence.mp3';
-import micicon from "../microphone2.png";
+import micicon from "./microphone2.png";
 
 class Trial extends Component {
   constructor(props) {
