@@ -81,83 +81,83 @@ class Trial extends Component {
     });
   };
 
-  visualize = (audioData) => {
+//   visualize = (audioData) => {
     
-    var stream = this.stream;
-    console.log("Hi",stream)
-    if (!stream)
-        return;
-    canvas = document.getElementById("visualizer");
+//     var stream = this.stream;
+//     console.log("Hi",stream)
+//     if (!stream)
+//         return;
+//     canvas = document.getElementById("visualizer");
 
-    var canvas = canvas;
-    var WIDTH = canvas.width;
-    var HEIGHT = canvas.height;
+//     var canvas = canvas;
+//     var WIDTH = canvas.width;
+//     var HEIGHT = canvas.height;
 
-    var ctx = canvas.getContext("2d");
+//     var ctx = canvas.getContext("2d");
 
-    var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    var analyser = audioContext.createAnalyser();
-    var dataArray = new Uint8Array(analyser.frequencyBinCount);
+//     var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+//     var analyser = audioContext.createAnalyser();
+//     var dataArray = new Uint8Array(analyser.frequencyBinCount);
     
-    if (stream instanceof Blob) {
-        const arrayBuffer = new Response(stream).arrayBuffer();
-        const audioBuffer = audioContext.decodeAudioData(arrayBuffer);
-        source = audioContext.createBufferSource();
-        source.buffer = audioBuffer;
-        source.connect(analyser);
-        source.start(0);
-    }
-    else {
-        var source = audioContext.createMediaStreamSource(stream);
-        source.connect(analyser);
-    }
+//     if (stream instanceof Blob) {
+//         const arrayBuffer = new Response(stream).arrayBuffer();
+//         const audioBuffer = audioContext.decodeAudioData(arrayBuffer);
+//         source = audioContext.createBufferSource();
+//         source.buffer = audioBuffer;
+//         source.connect(analyser);
+//         source.start(0);
+//     }
+//     else {
+//         var source = audioContext.createMediaStreamSource(stream);
+//         source.connect(analyser);
+//     }
 
-    analyser.fftSize = 1024;
-    var bufferLength = analyser.fftSize;
-    var dataArray = new Uint8Array(bufferLength);
+//     analyser.fftSize = 1024;
+//     var bufferLength = analyser.fftSize;
+//     var dataArray = new Uint8Array(bufferLength);
 
-    ctx.clearRect(0, 0, WIDTH, HEIGHT);
-    var draw = () => {
+//     ctx.clearRect(0, 0, WIDTH, HEIGHT);
+//     var draw = () => {
 
-        this.visualDrawTimer = requestAnimationFrame(draw);
+//         this.visualDrawTimer = requestAnimationFrame(draw);
 
-        analyser.getByteTimeDomainData(dataArray);
+//         analyser.getByteTimeDomainData(dataArray);
 
-        // ctx.fillStyle = "lightblue";
+//         // ctx.fillStyle = "lightblue";
 
-        ctx.fillStyle = "#D9D9D9";
-        ctx.fillRect(0, 0, WIDTH, HEIGHT);
+//         ctx.fillStyle = "#D9D9D9";
+//         ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = "red";
+//         ctx.lineWidth = 2;
+//         ctx.strokeStyle = "red";
 
-        ctx.beginPath();
+//         ctx.beginPath();
 
-        var sliceWidth = WIDTH * 1.0 / bufferLength;
-        var x = 0;
+//         var sliceWidth = WIDTH * 1.0 / bufferLength;
+//         var x = 0;
 
-        for(var i = 0; i < bufferLength; i++) {
+//         for(var i = 0; i < bufferLength; i++) {
 
-            var v = dataArray[i] / 128.0;
-            var y = v * HEIGHT/2;
+//             var v = dataArray[i] / 128.0;
+//             var y = v * HEIGHT/2;
 
-            if(i === 0) {
-                ctx.moveTo(x, y);
-            }
-            else {
-                ctx.lineTo(x, y);
-            }
+//             if(i === 0) {
+//                 ctx.moveTo(x, y);
+//             }
+//             else {
+//                 ctx.lineTo(x, y);
+//             }
 
-            x += sliceWidth;
-        }
+//             x += sliceWidth;
+//         }
 
-        ctx.lineTo(WIDTH, HEIGHT/2);
-        ctx.stroke();
-    };
-    draw();
-}
+//         ctx.lineTo(WIDTH, HEIGHT/2);
+//         ctx.stroke();
+//     };
+//     draw();
+// }
 
-  start = () => {
+  start = (flag) => {
     this.setState({
       recordState: RecordState.START,
       showStart: false,
@@ -167,16 +167,20 @@ class Trial extends Component {
       disabledRecording: true,
       showOriginalAudio: false,
     }, function(){
-      navigator.mediaDevices.getUserMedia ({
-        audio: true,
-        video: false
-    })
-            .then( stream => {
-                this.stream = stream;
-                this.visualize();
-            })
-            .catch(e => console.log("ERROR", e));
-    });
+    //   navigator.mediaDevices.getUserMedia ({
+    //     audio: true,
+    //     video: false
+    // })
+    //         .then( stream => {
+    //             this.stream = stream;
+    //             this.visualize();
+    //         })
+    //         .catch(e => console.log("ERROR", e));
+    // });
+    if (flag){
+      this.incrementCommand();
+    }
+  })
   };
 
   upload = (data) => {
@@ -190,17 +194,17 @@ class Trial extends Component {
       autoplay: false,
       disabledRecording: true,
     }, function(){
-      this.start();
+      this.start(true);
     });
     
-    var data = this.state.audioData;
-    this.visualize(data);
-    this.incrementCommand();
-    var command_name = this.state.currentText;
-    console.log(command_name);
-    console.log("This is data url : ", data?.url);
-    this.testFun();
-    console.log("onStop: audio data", data);
+    // var data = this.state.audioData;
+    // // this.visualize(data);
+    // // this.incrementCommand();
+    // var command_name = this.state.currentText;
+    // console.log(command_name);
+    // console.log("This is data url : ", data?.url);
+    // this.testFun();
+    // console.log("onStop: audio data", data);
   };
 
   pause = () => {
@@ -241,6 +245,15 @@ class Trial extends Component {
     console.log("audio data onstop", this.state.audioData)
     this.setState({
       audioData: data,
+    },()=>{
+      var data = this.state.audioData;
+    // this.visualize(data);
+    // this.incrementCommand();
+    var command_name = this.state.currentText;
+    console.log(command_name);
+    console.log("This is data url : ", data?.url);
+    this.testFun();
+    console.log("onStop: audio data", data);
     });
   };
 
@@ -406,9 +419,9 @@ class Trial extends Component {
       <div className="container">
         <div className="row">
           <div className="col text-center">
-            <div hidden>
+            {/* <div hidden>
               <AudioReactRecorder state={recordState} onStop={this.onStop} />
-            </div>
+            </div> */}
 
             <div className="command-container rounded col-sm">
               <div className="row m-2">
@@ -449,7 +462,9 @@ class Trial extends Component {
                 id="record"
                 disabled={this.state.disabledStart}
                 style={{ height: "100px", width: "25%", fontSize: "30px" }}
-                onClick={this.start}
+                onClick={()=>{
+                  this.start(false)
+                }}
               >
                 {console.log("start")}
                 Start
@@ -489,7 +504,17 @@ class Trial extends Component {
               </button>
             )}
           </div>
-          <div className="row m-2" id="recording" style={{display:(disabledRecording && this.state.index< this.state.text.length)?"block":"none", fontSize:"20px"}}><center><img src={micicon} style={{width:"4%", height:"4%",  marginRight:"10px", marginBottom:"-5px"}}/><canvas id="visualizer" width="300" height="50" style={{marginBottom:"-20px"}}></canvas></center></div>
+          {/* <div className="row m-2" id="recording" style={{display:(disabledRecording && this.state.index< this.state.text.length)?"block":"none", fontSize:"20px"}}><center><img src={micicon} style={{width:"4%", height:"4%",  marginRight:"10px", marginBottom:"-5px"}}/><canvas id="visualizer" width="300" height="50" style={{marginBottom:"-20px"}}></canvas></center></div>
+        </div> */}
+        <div className="row m-2" id="recording" >
+          <div className="col" style={{ display: (disabledRecording && this.state.index < this.state.text.length) ? "block" : "none"}}>
+          <img src={micicon} style={{ width: "7%", height: "60%", marginRight: "10px", marginRight:"-210px", marginLeft:"450px", marginTop:"20px"}}/>
+          </div>
+          <div className="col" style={{marginLeft:"-220px", marginTop:"20px", display: (disabledRecording && this.state.index < this.state.text.length) ? "block" : "none"}}>
+          <AudioReactRecorder state={recordState} onStop={this.onStop} backgroundColor={"#D9D9D9"} foregroundColor={"red"} canvasWidth={300} canvasHeight={50}  />
+          </div>
+          </div>
+          {/* <div className="row m-2" id="recording" style={{ display: (disabledRecording && this.state.index < this.state.text.length) ? "block" : "none", fontSize: "20px" }}><center><img src={micicon} style={{ width: "4%", height: "4%", marginRight: "10px", marginBottom: "-5px" }} /><canvas id="visualizer" width="300" height="50" style={{ marginBottom: "-20px" }}></canvas></center></div> */}
         </div>
         <div className="row m-2">
           {showAudio && (

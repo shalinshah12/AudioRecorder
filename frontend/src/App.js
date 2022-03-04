@@ -601,7 +601,8 @@ class App extends React.Component {
                 onClick={this.togglePopup.bind(this)}
                 style={{ height: "100px", width: "25%", fontSize: "23px", backgroundColor: "#CB6C6B" }}
               >
-                Skip the recording trials and jump to the survey
+                {/* Skip the recording trials and jump to the survey */}
+                {this.state.index < this.state.text.length? "Skip the recording trials and jump to the survey": "Begin the Survey"}
               </a>
               {/* {this.state.seen ? <PopUp toggle={this.togglePop} /> : null} */}
             </div>
