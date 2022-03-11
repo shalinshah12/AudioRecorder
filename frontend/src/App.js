@@ -288,7 +288,7 @@ class App extends React.Component {
     }, ()=>{
     var a_data = this.state.audioData;
     // this.visualize(data);
-    debugger
+    // debugger
     console.log(data)
     var command_name = this.getCurrentText();
     var userId = this.state.userId;
@@ -333,6 +333,7 @@ class App extends React.Component {
           var fd = new FormData();
           fd.append("audio_data", blob);
           xhr_send.open("POST", "/receive-audio", true);
+          console.log(command_name)
           xhr_send.setRequestHeader("command_name", command_name);
           console.log(command_name, userId);
           xhr_send.setRequestHeader("userId", userId);

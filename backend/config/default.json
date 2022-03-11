@@ -1,7 +1,7 @@
 {
   "development": {
     "port": 8082,
-    "mongoURI": "mongodb+srv://shalinshah:shalinshah12@audiorecorder.hzoum.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "mongoURI": "mongodb://localhost/audiorecords?retryWrites=true&w=majority",
     "Delimiter": "|"
   }
 }

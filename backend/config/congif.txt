@@ -1,0 +1,1 @@
+mongodb+srv://shalinshah:shalinshah12@audiorecorder.hzoum.mongodb.net/myFirstDatabase?retryWrites=true&w=majority

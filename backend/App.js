@@ -32,8 +32,10 @@ let storage = new GridFsStorage({
   db: connection,
   file: (req, file) => {
     let command = req.get("command_name");
+    console.log("backend", command)
     let userId = req.get("userId");
     let filename = command + "|" + userId;
+    console.log(filename)
     return {
       bucketName: "AudioRecords",
       filename: filename,
