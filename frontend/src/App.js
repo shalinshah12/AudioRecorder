@@ -334,7 +334,7 @@ class App extends React.Component {
           fd.append("audio_data", blob);
           xhr_send.open("POST", "/receive-audio", true);
           console.log(command_name)
-          xhr_send.setRequestHeader("command_name", command_name);
+          xhr_send.setRequestHeader("commandname", command_name);
           console.log(command_name, userId);
           xhr_send.setRequestHeader("userId", userId);
           // xhr_send.onload = function (e) {

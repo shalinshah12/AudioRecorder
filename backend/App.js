@@ -31,7 +31,7 @@ const connection = mongoose.connect(mongoURL, {
 let storage = new GridFsStorage({
   db: connection,
   file: (req, file) => {
-    let command = req.get("command_name");
+    let command = req.get("commandname");
     console.log("backend", command)
     let userId = req.get("userId");
     let filename = command + "|" + userId;
