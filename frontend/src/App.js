@@ -2,6 +2,7 @@ import React from "react";
 import AudioReactRecorder, { RecordState } from "audio-react-recorder";
 import "audio-react-recorder/dist/index.css";
 import Command from "./components/commands";
+import Admin from "./components/";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 // import sound from "./1-second-of-silence.mp3";
